@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script src="../static/app.js"></script>
+    <link rel="stylesheet" href="../static/app.css">
+    {% if title %}
+        <title>{{title}} | Fenix BI</title>
+    {% else %}
+        <title>Welcome | Fenix BI</title>
+    {% endif %}
+</head>
+<body>
+    {% block navbar %}
+        <div>Fenix: <a href="{{url_for('index')}}">Home</a></div>
+        {% if current_user.is_anonymous %}
+            <div>Fenix: <a href="{{url_for('login')}}">Login</a></div>
+        {% else %}
+        <div>Fenix: <a href="{{url_for('user',username=current_user.username)}}">Profile</a></div>
+            <div>Fenix: <a href="{{url_for('logout')}}">Logout</a></div>
+        {% endif %}
+        
+       
+        
+            {% if current_user %}
+            <h1>Bem Vindo {{current_user.username}}</h1>
+            {% else %}
+            <h1>Bem Vindo!</h1>
+            {% endif %}
+            {% with messages = get_flashed_messages() %}
+            {%if messages %}
+               <ul>
+                   {% for message in messages %}
+                   <li>{{message}}</li>
+                   {% endfor %}
+               </ul>
+            {% endif %}
+            {% endwith %}
+    {% endblock navbar %}    
+       
+    {% block content %}
+         <p>Conteudo</p>
+    {% endblock content %}
+
+    {% block footer %}
+    <h4>Footer</h4>
+    {% endblock footer %}
+</body>
+</html>
